@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>DFT_ESP32</title>
+    
+
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+            padding: 5px 50px;
+        }
+
+        .flex {
+            display: flex;
+            text-align: middle;
+        }
+
+        .font {
+            font: "Arial", "san-serrif";
+        }
+        .SB{
+            justify-content: space-between;
+        }
+        .indicator{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: red;
+            margin-right: 5px;
+        }
+        .bold {
+            height: 2px;
+            background-color: black;
+            border-radius: 50%;
+        }
+
+        .tools {
+            /* width: 350px; */
+            border: 1px solid grey;
+            padding: 5px;
+        }
+
+        .button {
+            font-size: 18px;
+            padding: 0px 10px;
+            min-height: 35px;
+            border: 1px solid grey;
+            border-radius: 5px;
+            margin: 8px;
+        }
+        .left{
+            width: 200px;
+            border: 1px solid grey;
+            height: 33rem;
+        }
+        .right{
+            padding: 4rem;
+        }
+        .display{
+            border: 1px solid grey;
+            width: 70vw;
+            height: 55vh;
+        }
+        #myChart{
+          
+  height: 100% !important;
+  width: 100% !important;
+  color: white;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex SB">
+        <div class="flex">
+            <h1>Analysis : Embedded </h1>
+            <p>esp32</p>
+        </div>
+        <div class="flex">
+            <h3 class="indicator"></h3>
+            <h3>Verson: </h3>
+            <h4>0.15.0</h4>
+        </div>
+    </div>
+    <hr class="bold">
+    <div class="flex tools">
+        <div>
+        <button class="button">System</button>
+        <button class="button">Introduction</button>
+        <button class="button">Ossilloscope</button>
+        <button class="button">DFT</button>
+        <button class="button">Leds</button>
+        <button class="button">Notes</button>
+        <button class="button">Parameters</button>
+        <button class="button">WiFi Settings</button>
+        <button class="button">Custom Command</button>
+        <button class="button">GPIOs</button>
+        <button class="button">System Reflash</button>
+    </div>
+    </div>
+    <div class="flex">
+        <div class="left">
+            <h2>DFT</h2>
+        </div>
+        <div class="right">
+            <div class="display">
+
+             
+                    <canvas id="myChart"></canvas>
+                 
+             
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js" integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: [1,2,3,4,5,2,1,4,5,2,1,5,4,5,4,2,1,2,1,2],
+            datasets: [{
+              label: 'DFT',
+              data: [12, 19, 3, 5, 2, 3],
+              borderWidth: 1,
+            //   backgroundColor: "#ed4512",
+              fill: {
+                target: 'origin',
+                above: 'rgb(255, 0, 0)',   // Area will be red above the origin
+                below: 'rgb(0, 0, 255)'    // And blue below the origin
+              }
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+
+
+
+
+</body>
+
+</html>
