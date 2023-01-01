@@ -28,24 +28,8 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 // Function Prototype
 void webpage();
-
-char *sliceString(char *str, int start, int end)
-{
-
-    int i;
-    int size = (end - start) + 1; // memory allocate size
-    char *output = (char *)malloc(size * sizeof(char));
-
-    for (i = 0; start <= end; start++, i++)
-    {
-        output[i] = str[start]; 
-    }
-
-    output[size] = '\0';
-
-    return output;
-}
-
+char *sliceString(char *str, int start, int end);
+void GPIOS(uint8_t* payload);
 
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
   const uint8_t* src = (const uint8_t*) mem;
@@ -152,8 +136,15 @@ void GPIOS(uint8_t* payload){
   if(Value == "ON_"){digitalWrite(pin_num,HIGH);}
   else if(Value == "OFF"){digitalWrite(pin_num,LOW);}
   else{USE_SERIAL.println("else");}
+}
+char *sliceString(char *str, int start, int end){
+    int i;
+    int size = (end - start) + 1; // memory allocate size
+    char *output = (char *)malloc(size * sizeof(char));
 
-
-
-  
+    for (i = 0; start <= end; start++, i++){
+        output[i] = str[start]; 
+    }
+    output[size] = '\0';
+    return output;
 }
