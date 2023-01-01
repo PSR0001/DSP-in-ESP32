@@ -53,11 +53,13 @@
             border-radius: 5px;
             margin: 8px;
         }
-        .ROUTE_ON{
-            color:white;
+
+        .ROUTE_ON {
+            color: white;
             background-color: #fa6400;
             border-color: #aa8c13;
         }
+
         .left {
             width: 200px;
             border: 1px solid grey;
@@ -102,10 +104,12 @@
             border-color: #13aa52;
             color: white;
         }
-        .GPIOs{
+
+        .GPIOs {
             position: inherit;
         }
-        .WiFi{
+
+        .WiFi {
             text-align: center;
             margin: auto;
             margin-top: 50px;
@@ -115,33 +119,41 @@
             border: 1px solid grey;
 
         }
-        .WiFi input{
-            margin: 10px;        
+
+        .WiFi input {
+            margin: 10px;
             padding: 5px;
         }
-        .WiFi button{
+
+        .WiFi button {
             background-color: white;
             padding: 5px;
             border: 1px solid grey;
             border-radius: 4px;
         }
-        .Custom{
+
+        .Custom {
             padding: .5rem;
         }
-        
-        .Custom textarea{
+
+        .Custom textarea {
             min-width: 66rem;
             height: 22rem !important;
             margin-top: 1px;
         }
-        .Reflash{
-            display: block;
-  
-        }
-        .center {
- 
-}
 
+        .Reflash {
+            display: block;
+            width: 15rem;
+            margin: auto;
+            margin-top: 5rem;
+            border: 1px solid grey;
+            padding: 2rem;
+            background-color: whitesmoke;
+            border-radius: 2px;
+        }
+       
+        
     </style>
 </head>
 
@@ -152,7 +164,7 @@
             <p>esp32</p>
         </div>
         <div class="flex">
-            <h3 class="indicator"></h3>
+            <h3 class="indicator" id="indicator"></h3>
             <h3>Verson: </h3>
             <h4>0.15.0</h4>
         </div>
@@ -163,19 +175,23 @@
             <button type="button" onclick="route(this)" id="system" class="button">System</button>
             <button type="button" onclick="route(this)" id="Introduction" class="button">Introduction</button>
             <button type="button" onclick="route(this)" id="Ossilloscope" class="button">Ossilloscope</button>
-            <button type="button" onclick="route(this)" id="DFT" class="button" >DFT</button>
+            <button type="button" onclick="route(this)" id="DFT" class="button">DFT</button>
             <button type="button" onclick="route(this)" id="Leds" class="button">Leds</button>
             <button type="button" onclick="route(this)" id="Notes" class="button">Notes</button>
             <button type="button" onclick="route(this)" id="Parameters" class="button">Parameters</button>
             <button type="button" onclick="route(this)" id="WiFi" class="button">WiFi Settings</button>
             <button type="button" onclick="route(this)" id="Custom" class="button">Custom Command</button>
-            <button type="button" onclick="route(this)" id="GPIOs" class="button" >GPIOs</button>
+            <button type="button" onclick="route(this)" id="GPIOs" class="button">GPIOs</button>
             <button type="button" onclick="route(this)" id="Reflash" class="button">System Reflash</button>
         </div>
     </div>
     <div class="flex">
         <div class="left">
             <h2>DFT</h2>
+
+            <div class="Terminal">
+
+            </div>
         </div>
         <div class="right">
             <div class="display">
@@ -186,7 +202,7 @@
                 <!-- Custom command -->
                 <div class="Custom show">
                     <div>
-                        <input type="text"> 
+                        <input type="text">
                         <button type="button" onclick="CDM(this)">cmd</button>
                     </div>
                     <div>
@@ -195,51 +211,53 @@
                 </div>
 
                 <!-- system reflash -->
-                <div class="Reflash">
+                <center class="Reflash show">
+                    
                     <input type="file" name="file" id="">
-                    <div></div>
+                    <br><br>
                     <button type="button">Flash</button>
-                </div>
+                    
+                </center>
 
 
 
                 <div class="GPIOs show">
-                <div>
-                    <button type="button" class="GPIOS" id="GPIO13" onclick="colorChange(this)">GPIO 13</button>
-                    <button type="button" class="GPIOS" id="GPIO14" onclick="colorChange(this)">GPIO 14</button>
-                    <button type="button" class="GPIOS" id="GPIO27" onclick="colorChange(this)">GPIO 27</button>
-                    <button type="button" class="GPIOS" id="GPIO26" onclick="colorChange(this)">GPIO 26</button>
-                    <button type="button" class="GPIOS" id="GPIO25" onclick="colorChange(this)">GPIO 25</button>
-                    <button type="button" class="GPIOS" id="GPIO33" onclick="colorChange(this)">GPIO 33</button>
-                    <button type="button" class="GPIOS" id="GPIO32" onclick="colorChange(this)">GPIO 32</button>
-                    <button type="button" class="GPIOS" id="GPIO35" onclick="colorChange(this)">GPIO 35</button>
-                    <button type="button" class="GPIOS" id="GPIO34" onclick="colorChange(this)">GPIO 34</button>
+                    <div>
+                        <button type="button" class="GPIOS" id="GPIO13" onclick="colorChange(this)">GPIO 13</button>
+                        <button type="button" class="GPIOS" id="GPIO14" onclick="colorChange(this)">GPIO 14</button>
+                        <button type="button" class="GPIOS" id="GPIO27" onclick="colorChange(this)">GPIO 27</button>
+                        <button type="button" class="GPIOS" id="GPIO26" onclick="colorChange(this)">GPIO 26</button>
+                        <button type="button" class="GPIOS" id="GPIO25" onclick="colorChange(this)">GPIO 25</button>
+                        <button type="button" class="GPIOS" id="GPIO33" onclick="colorChange(this)">GPIO 33</button>
+                        <button type="button" class="GPIOS" id="GPIO32" onclick="colorChange(this)">GPIO 32</button>
+                        <button type="button" class="GPIOS" id="GPIO35" onclick="colorChange(this)">GPIO 35</button>
+                        <button type="button" class="GPIOS" id="GPIO34" onclick="colorChange(this)">GPIO 34</button>
+                    </div>
+                    <div>
+                        <button type="button" class="GPIOS" id="GPIO15" onclick="colorChange(this)">GPIO 15</button>
+                        <button type="button" class="GPIOS" id="GPIO02" onclick="colorChange(this)">GPIO 02</button>
+                        <button type="button" class="GPIOS" id="GPIO04" onclick="colorChange(this)">GPIO 04</button>
+                        <button type="button" class="GPIOS" id="GPIO05" onclick="colorChange(this)">GPIO 05</button>
+                        <button type="button" class="GPIOS" id="GPIO18" onclick="colorChange(this)">GPIO 18</button>
+                        <button type="button" class="GPIOS" id="GPIO19" onclick="colorChange(this)">GPIO 19</button>
+                        <button type="button" class="GPIOS" id="GPIO21" onclick="colorChange(this)">GPIO 21</button>
+                        <button type="button" class="GPIOS" id="GPIO22" onclick="colorChange(this)">GPIO 22</button>
+                        <button type="button" class="GPIOS" id="GPIO23" onclick="colorChange(this)">GPIO 23</button>
+                    </div>
                 </div>
-                <div>
-                    <button type="button" class="GPIOS" id="GPIO15" onclick="colorChange(this)">GPIO 15</button>
-                    <button type="button" class="GPIOS" id="GPIO02" onclick="colorChange(this)">GPIO 02</button>
-                    <button type="button" class="GPIOS" id="GPIO04" onclick="colorChange(this)">GPIO 04</button>
-                    <button type="button" class="GPIOS" id="GPIO05" onclick="colorChange(this)">GPIO 05</button>
-                    <button type="button" class="GPIOS" id="GPIO18" onclick="colorChange(this)">GPIO 18</button>
-                    <button type="button" class="GPIOS" id="GPIO19" onclick="colorChange(this)">GPIO 19</button>
-                    <button type="button" class="GPIOS" id="GPIO21" onclick="colorChange(this)">GPIO 21</button>
-                    <button type="button" class="GPIOS" id="GPIO22" onclick="colorChange(this)">GPIO 22</button>
-                    <button type="button" class="GPIOS" id="GPIO23" onclick="colorChange(this)">GPIO 23</button>
-                </div>
-            </div>
 
-            <div class="WiFi show">
-                <div class="WiFi_Card">
-                    <h2>WiFi SSID || Password</h2>
-                <div>
-                <input type="text">
+                <div class="WiFi show">
+                    <div class="WiFi_Card">
+                        <h2>WiFi SSID || Password</h2>
+                        <div>
+                            <input type="text">
+                        </div>
+                        <div>
+                            <input type="text">
+                        </div>
+                        <button type="button">Change</button>
+                    </div>
                 </div>
-                <div>
-                <input type="text">
-                </div>
-                <button type="button">Change</button>
-            </div>
-            </div>
 
 
 
@@ -250,7 +268,7 @@
 
 
 
-<!-- 
+    <!-- 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"
         integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
@@ -258,12 +276,16 @@
     <script>
         let DFT_button = false;
 
-        function colorChange(e) {
-            e.classList.toggle("GPIO_ON")
+        function colorChange(e) { 
+            if(e.classList.toggle("GPIO_ON")){
+            websock.send(`${e.id} : ON_`);
+            }else{
+            websock.send(`${e.id} : OFF`);  
+            }
         }
 
         // route function for routing
-        function route(e){
+        function route(e) {
             e.classList.toggle("ROUTE_ON")
             document.querySelector(`.${e.id}`).classList.toggle("show")
         }
@@ -283,7 +305,6 @@
 
 
         // const ctx = document.getElementById('myChart');
-
         // new Chart(ctx, {
         //     type: 'bar',
         //     data: {
@@ -312,29 +333,27 @@
 
     </script>
 
-    <!-- <script >
+    <script >
         InitWebSocket()
         function InitWebSocket()
         {
-        websock = new WebSocket('ws://'+window.location.hostname+':81/'); 
-        websock.onmessage = function(evt)
+        // websock = new WebSocket('ws://'+window.location.hostname+':81/'); 
+        websock = new WebSocket('ws://192.168.43.108:81/'); 
+        websock.onmessage = function(enent)
         {
-            
+           if(event.data = "Connected"){
+            // console.log(document.getElementById("indicator"))
+            document.getElementById("indicator").style.backgroundColor = "#55df55"
+           } 
+           else if(event.data = "Disconnected"){
+            document.getElementById("indicator").style.backgroundColor = "red"
+           } 
            
            
         }
         }
     
-     function button()
-     {
-        btn = 'LEDonoff=ON';
-        if(document.getElementById('btn').innerHTML == 'ON')
-        {
-          btn = 'LEDonoff=OFF';
-        }
-        websock.send(btn);
-     }
-      </script> -->
+      </script>
 
 
 </body>
