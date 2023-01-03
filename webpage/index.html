@@ -152,8 +152,17 @@
             background-color: whitesmoke;
             border-radius: 2px;
         }
-       
-        
+
+        #canvas {
+            position: absolute;
+            right: 0;
+        }
+        #osciCanvas {
+
+height: 100% !important;
+width: 100% !important;
+
+}
     </style>
 </head>
 
@@ -196,7 +205,12 @@
         <div class="right">
             <div class="display">
 
-
+                <div class="Ossilloscope">
+                    <table width="100%" border="1"><tr><td ><CANVAS id="osciCanvas"></CANVAS></td></tr></table>
+                    <div>
+                        <canvas id="canvas"></canvas>
+                    </div>
+                </div>
                 <!-- <canvas id="myChart" class="DFT show"></canvas> -->
 
                 <!-- Custom command -->
@@ -212,11 +226,11 @@
 
                 <!-- system reflash -->
                 <center class="Reflash show">
-                    
+
                     <input type="file" name="file" id="">
                     <br><br>
                     <button type="button">Flash</button>
-                    
+
                 </center>
 
 
@@ -268,19 +282,19 @@
 
 
 
-    <!-- 
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"
         integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         let DFT_button = false;
 
-        function colorChange(e) { 
-            if(e.classList.toggle("GPIO_ON")){
-            websock.send(`${e.id} : ON_`);
-            }else{
-            websock.send(`${e.id} : OFF`);  
+        function colorChange(e) {
+            if (e.classList.toggle("GPIO_ON")) {
+                websock.send(`${e.id} : ON_`);
+            } else {
+                websock.send(`${e.id} : OFF`);
             }
         }
 
@@ -300,7 +314,89 @@
 
 
 
+//         var canvas = document.getElementById("osciCanvas");
+// var ctx = canvas.getContext("2d");
+// let time=1;
+// ctx.moveTo(-100, 0);
+// // ctx.beginPath();
+// ctx.lineTo(400, 100);
+// ctx.stroke();
 
+// function pushValueChart(data){
+// ctx.moveTo(0, 0);
+// ctx.lineTo(400, 100);
+// ctx.stroke();
+// if (time === 20){
+
+// }
+// }
+    
+    
+const ctx = document.getElementById("osciCanvas").getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        datasets: [{ 
+            pointRadius: 0,
+        label: 'Oscillscope',
+        data: [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        backgroundColor: [
+            'rgba(75, 192, 192,0.2)'
+        ],
+        borderColor: [
+            'rgb(75, 192, 192)'
+        ],
+        // fill: true,
+        borderWidth: 1,
+        spanGaps:true,
+        showLine:true,
+        tension: 0.5
+        }]
+    },
+    
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                min:0,
+                max:600
+            }
+
+        },
+        animation: {
+        duration: 0
+        }
+    }
+});
+
+let time=0;
+function pushValueChart(data){
+let sameData;
+    if(data != sameData ){
+
+    myChart.data.datasets[0].data.push(data)
+    myChart.data.datasets[0].data.shift()
+    sameData=data;
+    time+=1
+    myChart.data.labels.push(time)
+    myChart.data.labels.shift()
+    myChart.update();
+    }
+    
+}
+
+    // setTimeout(() => {
+        
+    //     for (let inde = 0; inde < 5; inde++) {
+    //         myChart.clear();
+    //         for (let index = 0; index < 2; index++) {
+    //         pushValueChart( Math.random() * (10 - 9) + 10)
+    //     }
+    //   }
+
+    // }, 1000)
 
 
 
@@ -332,28 +428,52 @@
 
 
     </script>
+    <script>
+        draw()
+        function draw() {
+            const canvas = document.getElementById("canvas");
+            if (canvas.getContext) {
+                const ctx = canvas.getContext("2d");
 
-    <script >
+                ctx.beginPath();
+                ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // Outer circle
+                ctx.moveTo(110, 75);
+                ctx.arc(75, 75, 35, 0, Math.PI, false); // Mouth (clockwise)
+                ctx.moveTo(65, 65);
+                ctx.arc(60, 65, 5, 0, Math.PI * 2, true); // Left eye
+                ctx.moveTo(95, 65);
+                ctx.arc(90, 65, 5, 0, Math.PI * 2, true); // Right eye
+                ctx.stroke();
+            }
+        }
+    </script>
+    <script>
         InitWebSocket()
-        function InitWebSocket()
-        {
-        // websock = new WebSocket('ws://'+window.location.hostname+':81/'); 
-        websock = new WebSocket('ws://192.168.43.108:81/'); 
-        websock.onmessage = function(enent)
-        {
-           if(event.data = "Connected"){
-            // console.log(document.getElementById("indicator"))
-            document.getElementById("indicator").style.backgroundColor = "#55df55"
-           } 
-           else if(event.data = "Disconnected"){
-            document.getElementById("indicator").style.backgroundColor = "red"
-           } 
-           
-           
+        function InitWebSocket() {
+            // websock = new WebSocket('ws://'+window.location.hostname+':81/'); 
+            websock = new WebSocket('ws://192.168.43.108:81/');
+            websock.onmessage = function (enent) {
+
+                if (event.data = "Connected") {
+                    // console.log(document.getElementById("indicator"))
+                    document.getElementById("indicator").style.backgroundColor = "#55df55"
+                }
+                else if (event.data = "Disconnected") {
+                    document.getElementById("indicator").style.backgroundColor = "red"
+                }else{
+                    // if(event.isnan()){
+                    // pushValueChart(parseInt(event.data))
+                    // console.log(event.data)
+                    // }
+                    // console.log(event)
+                }
+
+                pushValueChart(parseInt(event.data))
+                    // console.log(event.data)
+            }
         }
-        }
-    
-      </script>
+
+    </script>
 
 
 </body>

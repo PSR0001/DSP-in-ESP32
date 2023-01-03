@@ -30,6 +30,10 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 void webpage();
 char *sliceString(char *str, int start, int end);
 void GPIOS(uint8_t* payload);
+char buffer2[20];
+
+
+
 
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
   const uint8_t* src = (const uint8_t*) mem;
@@ -46,6 +50,7 @@ void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
 
 void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length) {
 
+    
     switch(type) {
         case WStype_DISCONNECTED:
             webSocket.sendTXT(num, "Disconnected");
@@ -63,6 +68,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
         case WStype_TEXT:
             USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
             GPIOS(payload);
+//            String payloadString = (const char *)payload;
             
             break;
         case WStype_BIN:
@@ -79,15 +85,19 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
 
 }
 
+unsigned long previousMillis = 0;
+int interval = 100;
+int value_a = 0;
+
 
 
 void setup() {
     // USE_SERIAL.begin(921600);
-    USE_SERIAL.begin(115200);
+    USE_SERIAL.begin(250000);
 
     delay(1000);
 
-  
+    pinMode(34,INPUT);
     USE_SERIAL.println();
     USE_SERIAL.println();
     USE_SERIAL.println();
@@ -112,11 +122,22 @@ void setup() {
     server.begin();
     webSocket.begin();
     webSocket.onEvent(webSocketEvent);
+    
 }
 
 void loop() {
     webSocket.loop();
     server.handleClient();
+    unsigned long currentMillis = millis(); 
+      if ((unsigned long)(currentMillis - previousMillis) >= interval){
+    value_a = analogRead(34);
+    webSocket.broadcastTXT(itoa(value_a,buffer2,10));
+    USE_SERIAL.println(value_a);
+      previousMillis = currentMillis;
+      value_a =0;
+      }
+
+
 }
 
 
