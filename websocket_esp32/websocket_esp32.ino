@@ -1,10 +1,3 @@
-/*
- * WebSocketServer.ino
- *
- *  Created on: 22.05.2015
- *
- */
-
 #include <Arduino.h>
 #include <stdio.h>
 #include <string.h>
