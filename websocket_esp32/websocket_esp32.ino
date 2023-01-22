@@ -8,6 +8,7 @@
 #include <WebServer.h>
 #include <WebSocketsServer.h>
 #include "html_doc.h"
+#include <arduinoFFT.h>
 
 
 WiFiMulti WiFiMulti;
@@ -17,6 +18,14 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 #define USE_SERIAL Serial
 #define ssid "vivo 1816"
 #define password "12345PSR"
+#define SAMPLES         1024          // Must be a power of 2
+#define SAMPLING_FREQ   40000         // Hz, must be 40000 nyquiest Criteria
+#define AMPLITUDE       1000          // roun
+#define AUDIO_IN_PIN    25  
+#define NUM_BANDS       16  
+
+
+
 
 
 // Function Prototype
@@ -68,11 +77,11 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t length
             USE_SERIAL.printf("[%u] get binary length: %u\n", num, length);
             hexdump(payload, length);
             break;
-    case WStype_ERROR:      
-    case WStype_FRAGMENT_TEXT_START:
-    case WStype_FRAGMENT_BIN_START:
-    case WStype_FRAGMENT:
-    case WStype_FRAGMENT_FIN:
+        case WStype_ERROR:      
+        case WStype_FRAGMENT_TEXT_START:
+        case WStype_FRAGMENT_BIN_START:
+        case WStype_FRAGMENT:
+        case WStype_FRAGMENT_FIN:
       break;
     }
 
@@ -121,14 +130,19 @@ void setup() {
 void loop() {
     webSocket.loop();
     server.handleClient();
-    unsigned long currentMillis = millis(); 
-      if ((unsigned long)(currentMillis - previousMillis) >= interval){
-    value_a = analogRead(34);
-    webSocket.broadcastTXT(itoa(value_a,buffer2,10));
-    USE_SERIAL.println(value_a);
-      previousMillis = currentMillis;
-      value_a =0;
-      }
+//    unsigned long currentMillis = millis(); 
+    //osciloscope code
+//      if ((unsigned long)(currentMillis - previousMillis) >= interval){
+//    value_a = analogRead(34);
+//    webSocket.broadcastTXT(itoa(value_a,buffer2,10));
+//    USE_SERIAL.println(value_a);
+//      previousMillis = currentMillis;
+//      value_a =0;
+//      }
+
+// Fft code 
+
+
 
 
 }
