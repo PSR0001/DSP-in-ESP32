@@ -446,22 +446,6 @@ function updateBar(data,position){
 
 
 
-for (let index1 = 0; index1 < 300; index1++) {
-
-setTimeout(() => {
-
-for (let index = 0; index < 16; index++) {
-  
-    setTimeout(() => {
-
-        updateBar(100+Math.floor(Math.random() * 100), index) 
-
-    }, 1500+index);  
-}
-}, 4000+Math.floor(Math.random() * 5000));
-
-}
-
 let time=0;
 function pushValueChart(data){
 let sameData;
@@ -557,10 +541,12 @@ let sameData;
                     // console.log(event.data)
                     // }
                     // console.log(event)
-
+                   
+                    console.log(event.data)
                 }
-
-                pushValueChart(parseInt(event.data))
+                let bar_data = event.data.split(" ")
+                    updateBar(bar_data[0], bar_data[1])
+                // pushValueChart(parseInt(event.data))
                     // console.log(event.data)
             }
         }
