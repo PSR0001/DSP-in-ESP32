@@ -52,7 +52,7 @@
                         </tr>
                     </table>
                     <div style="margin-left: 10px;">
-                        <select class="button">
+                        <select class="button" id="functionSelect">
                             <!-- <option value="0">Functions</option> -->
                             <option value="0">Sine</option>
                             <option value="1">Triangle</option>
@@ -60,6 +60,7 @@
                             <option value="3">Square</option>
                           </select>
                         <button type="button" id="submit" class="cbutton"><span>Submit</span></button>
+                        <button type="button" id="submit" class="button" onclick="updateGraph()"><span>Update Graph</span></button>
                         <br><br><br>
                         <div>
                             <div>
@@ -73,8 +74,8 @@
                                 <div class="flex">
                                 <input type="range" name="Frequency" id="Frequency" min="0" max="1000" value="500" oninput="rangeValue2.innerText = this.value" onchange="frequencyChange(this.value)"><p id="rangeValue2">500</p></div>
                             </div>
-                            
                         </div>
+                        <button type="button" id="zooom" class="button" onclick="Zoom()" >Zoom</button>
                     </div>
                   
                 </div>
@@ -198,37 +199,59 @@
 
         function amplitudeChange(value){
             
-            system_function.data.datasets[0].data[1] = value/100
-            system_function.data.datasets[0].data[3] = value/100
+            let Frequency_value = document.getElementById('Frequency').value
+            for (let index = 0; index < Frequency_value; index++) {
+                if (index%2 ===0) {
+                    system_function.data.datasets[0].data[index] = value/100
+                }
+            }
+            // system_function.data.datasets[0].data[3] = value/100
             system_function.update()
         }
         function frequencyChange(value){
-            let value2 = document.getElementById('Amplitude').value/100
-            let number_array=[];
+
+            let Amplitude_Value = document.getElementById('Amplitude').value/100
+            let number_array_labels=[];
+            let number_array_data=[];
+
             for (let index = 0; index < value; index++) {
-                number_array.push(index)                
-            }
-            let odds = number_array.filter(n => n%2)
-            
-            let datasetlength = system_function.data.datasets[0].data.length
+                number_array_labels.push(index)
 
-            for (let index = 0; index < odds.length; index++) {
-                if(index>datasetlength){
-                    
-                    system_function.data.datasets[0].data[odds[index]] = value2  
-                    system_function.data.labels.push(index)   
+                if (index%2 ===0) {
+                    number_array_data.push(Amplitude_Value)
+                }else{
+                    number_array_data.push(0)
+
                 }
-
-
-            
             }
-
-
-            
+            system_function.data.datasets[0].data=number_array_data
+            system_function.data.labels=number_array_labels
             system_function.update()
         }
-
-
+        function Zoom(){
+            if(system_function.data.labels.length >=10){
+                system_function.data.labels.splice(0,10)
+                system_function.update()
+            }
+        }
+        function updateGraph(){
+            switch (document.getElementById('functionSelect').value) {
+                case '1':
+                system_function.data.datasets[0].tension = 0
+                system_function.update()
+                    break;
+                case '2':
+                console.log("Two")
+                    break;
+                case '3':
+                console.log("Three")
+                    break;
+                default:
+                system_function.data.datasets[0].tension = 0.5
+                system_function.update()
+                    break;
+            }
+        }
 
 
     </script>
