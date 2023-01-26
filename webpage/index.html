@@ -1,197 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>DFT_ESP32</title>
-    <style>
-        
-::-webkit-scrollbar {
-    width: 0px;
-    height:0px;
-  }
-  ::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-  body::-webkit-scrollbar-track {
-      /* background-color: #6c7ebb; */
-    border-radius: 0px;
-  }
-  .dark ::-webkit-scrollbar-track{
-      /* background-color: #31313a; */
-      border-radius: 0 10px 10px 0;
-  }
-  ::-webkit-scrollbar-thumb {
-    
-    /* background-image: linear-gradient(#4458dc, #854fee); */
-    /* border-radius: 1px; */
-  }
-    </style>
-    <style>
-        body {
-            font-family: 'Trebuchet MS', sans-serif;
-            padding: 5px 50px;
-            /* position: fixed; */
-        }
-
-        .flex {
-            display: flex;
-            text-align: middle;
-        }
-
-        .font {
-            font: "Arial", "san-serrif";
-        }
-
-        .SB {
-            justify-content: space-between;
-        }
-
-        .indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: red;
-            margin-right: 5px;
-        }
-
-        .bold {
-            height: 2px;
-            background-color: black;
-            border-radius: 50%;
-        }
-
-        .tools {
-            /* width: 350px; */
-            border: 1px solid grey;
-            padding: 5px;
-        }
-
-        .button {
-            font-size: 18px;
-            padding: 0px 10px;
-            min-height: 35px;
-            border: 1px solid grey;
-            border-radius: 5px;
-            margin: 8px;
-        }
-
-        .ROUTE_ON {
-            color: white;
-            background-color: #fa6400;
-            border-color: #aa8c13;
-        }
-
-        .left {
-            width: 200px;
-            border: 1px solid grey;
-            min-height: 33rem;
-        }
-
-        .right {
-            padding: 4rem;
-        }
-
-        .display {
-            border: 1px solid grey;
-            width: 70vw;
-            height: 55vh;
-        }
-
-        #myChart {
-
-            height: 100% !important;
-            width: 100% !important;
-            color: white;
-            /* display: none !important; */
-
-        }
-
-        .show {
-            display: none !important;
-
-        }
-
-        .GPIOS {
-            font-size: 17px;
-            padding: 0px 18px;
-            min-height: 42px;
-            border: 1px solid grey;
-            border-radius: 5px;
-            margin: 8px;
-        }
-
-        .GPIO_ON {
-            background-color: #12ca5f;
-            border-color: #13aa52;
-            color: white;
-        }
-
-        .GPIOs {
-            position: inherit;
-        }
-
-        .WiFi {
-            text-align: center;
-            margin: auto;
-            margin-top: 50px;
-            padding: 5px;
-            width: 200px;
-            background-color: #f0f0f0;
-            border: 1px solid grey;
-
-        }
-
-        .WiFi input {
-            margin: 10px;
-            padding: 5px;
-        }
-
-        .WiFi button {
-            background-color: white;
-            padding: 5px;
-            border: 1px solid grey;
-            border-radius: 4px;
-        }
-
-        .Custom {
-            padding: .5rem;
-        }
-
-        .Custom textarea {
-            min-width: 66rem;
-            height: 22rem !important;
-            margin-top: 1px;
-        }
-
-        .Reflash {
-            display: block;
-            width: 15rem;
-            margin: auto;
-            margin-top: 5rem;
-            border: 1px solid grey;
-            padding: 2rem;
-            background-color: whitesmoke;
-            border-radius: 2px;
-        }
-
-        #canvas {
-            position: absolute;
-            right: 0;
-        }
-
-        #osciCanvas {
-
-            height: 400px !important;
-            width: 100% !important;
-
-        }
-
-        #dftCanvas {
-
-            height: 400px !important;
-            width: 100% !important;
-
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -233,6 +45,40 @@
         <div class="right">
             <div class="display">
 
+                <div class="system flex ">
+                    <table width="40%" border="1">
+                        <tr>
+                            <td><CANVAS id="sysCanvas"></CANVAS></td>
+                        </tr>
+                    </table>
+                    <div style="margin-left: 10px;">
+                        <select class="button">
+                            <!-- <option value="0">Functions</option> -->
+                            <option value="0">Sine</option>
+                            <option value="1">Triangle</option>
+                            <option value="2">sawtooth</option>
+                            <option value="3">Square</option>
+                          </select>
+                        <button type="button" id="submit" class="cbutton"><span>Submit</span></button>
+                        <br><br><br>
+                        <div>
+                            <div>
+                                <label for="Amplitude">Amplitude(mV)</label><br>
+                                <div class="flex">
+                                <input type="range" name="Amplitude" id="Amplitude" min="0" max="330" value="330" oninput="rangeValue.innerText = this.value" onchange="amplitudeChange(this.value)"><p id="rangeValue">330</p></div>
+                            </div>
+                            <br>
+                            <div>
+                                <label for="Frequency">Frequency(Hz)</label><br>
+                                <div class="flex">
+                                <input type="range" name="Frequency" id="Frequency" min="0" max="1000" value="500" oninput="rangeValue2.innerText = this.value" onchange="frequencyChange(this.value)"><p id="rangeValue2">500</p></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                  
+                </div>
+
                 <div class="DFT show">
                     <table width="100%" border="1">
                         <tr>
@@ -252,7 +98,6 @@
                         <canvas id="canvas"></canvas>
                     </div> -->
                 </div>
-                <!-- <canvas id="myChart" class="DFT show"></canvas> -->
 
                 <!-- Custom command -->
                 <div class="Custom show">
@@ -273,9 +118,6 @@
                     <button type="button">Flash</button>
 
                 </center>
-
-
-
                 <div class="GPIOs show">
                     <div>
                         <button type="button" class="GPIOS" id="GPIO13" onclick="colorChange(this)">GPIO 13</button>
@@ -321,128 +163,16 @@
         </div>
     </div>
 
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"
         integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+        <script src="index.js"></script>
+        <script src="chart.js"></script>
+        <script src="socket.js"></script>
+ 
     <script>
-        let DFT_button = false;
-
-        function colorChange(e) {
-            if (e.classList.toggle("GPIO_ON")) {
-                websock.send(`${e.id} : ON_`);
-            } else {
-                websock.send(`${e.id} : OFF`);
-            }
-        }
-
-        // route function for routing
-        function route(e) {
-            e.classList.toggle("ROUTE_ON")
-            document.querySelector(`.${e.id}`).classList.toggle("show")
-        }
-
-
-
-        function DFT() {
-            document.getElementById("myChart").classList.toggle("show");
-        }
-
-
-        const ctx = document.getElementById("osciCanvas").getContext('2d');
-        const myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-                datasets: [{
-                    pointRadius: 0,
-                    label: 'Oscillscope',
-                    data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-                    backgroundColor: [
-                        'rgba(75, 192, 192,0.2)'
-                    ],
-                    borderColor: [
-                        'rgb(75, 192, 192)'
-                    ],
-                    // fill: true,
-                    borderWidth: 1,
-                    spanGaps: true,
-                    showLine: true,
-                    tension: 0.5
-                }]
-            },
-
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        min: 0,
-                        // max:1000
-                    }
-
-                },
-                animation: {
-                    duration: 0
-                }
-            }
-        });
-
-
-        const bar = document.getElementById("dftCanvas").getContext('2d');
-        const myBar = new Chart(bar, {
-            type: 'bar',
-            data: {
-                labels: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-                datasets: [{
-                    pointRadius: 0,
-                    label: 'Oscillscope',
-                    data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 205, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(201, 203, 207, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
-                    ],
-                    // fill: true,
-                    borderWidth: 1,
-                    spanGaps: true,
-                    showLine: true,
-                    tension: 0.5
-                }]
-            },
-
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        min: 0,
-                        // max:600
-                    }
-
-                },
-                animation: {
-                    duration: 0
-                }
-            }
-        });
-
         function updateBar(data, position) {
             if (position <= 15) {
                 myBar.data.datasets[0].data[position] = data
@@ -466,6 +196,41 @@
 
         }
 
+        function amplitudeChange(value){
+            
+            system_function.data.datasets[0].data[1] = value/100
+            system_function.data.datasets[0].data[3] = value/100
+            system_function.update()
+        }
+        function frequencyChange(value){
+            let value2 = document.getElementById('Amplitude').value/100
+            let number_array=[];
+            for (let index = 0; index < value; index++) {
+                number_array.push(index)                
+            }
+            let odds = number_array.filter(n => n%2)
+            
+            let datasetlength = system_function.data.datasets[0].data.length
+
+            for (let index = 0; index < odds.length; index++) {
+                if(index>datasetlength){
+                    
+                    system_function.data.datasets[0].data[odds[index]] = value2  
+                    system_function.data.labels.push(index)   
+                }
+
+
+            
+            }
+
+
+            
+            system_function.update()
+        }
+
+
+
+
     </script>
     <script>
         // draw()
@@ -486,39 +251,7 @@
         //     }
         // }
     </script>
-    <script>
-        InitWebSocket()
-        function InitWebSocket() {
-            websock = new WebSocket('ws://192.168.43.108:81/');
-            websock.onmessage = function (enent) {
 
-                if (event.data = "Connected") {
-                    document.getElementById("indicator").style.backgroundColor = "#55df55"
-                }
-                else if (event.data = "Disconnected") {
-                    document.getElementById("indicator").style.backgroundColor = "red"
-                } else {
-
-                }
-                let websocket_data = event.data.split(" ")
-
-                switch (websocket_data[0]) {
-                    case "oscilloscope":
-                        pushValueChart(websocket_data[1])
-                        break;
-                    case "fft":
-                        updateBar(websocket_data[1], websocket_data[2])
-                        break;
-
-                    default:
-                        // console.log("hello");
-                        break;
-                }
-
-            }
-        }
-
-    </script>
 
 
 </body>
