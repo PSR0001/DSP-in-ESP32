@@ -1,10 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>DFT_ESP32</title>
-
-
+    <style>
+        
+::-webkit-scrollbar {
+    width: 0px;
+    height:0px;
+  }
+  ::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+  body::-webkit-scrollbar-track {
+      /* background-color: #6c7ebb; */
+    border-radius: 0px;
+  }
+  .dark ::-webkit-scrollbar-track{
+      /* background-color: #31313a; */
+      border-radius: 0 10px 10px 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    
+    /* background-image: linear-gradient(#4458dc, #854fee); */
+    /* border-radius: 1px; */
+  }
+    </style>
     <style>
         body {
             font-family: 'Trebuchet MS', sans-serif;
@@ -160,14 +180,14 @@
 
         #osciCanvas {
 
-            height: 100% !important;
+            height: 400px !important;
             width: 100% !important;
 
         }
 
         #dftCanvas {
 
-            height: 100% !important;
+            height: 400px !important;
             width: 100% !important;
 
         }
@@ -228,9 +248,9 @@
                             <td><CANVAS id="osciCanvas"></CANVAS></td>
                         </tr>
                     </table>
-                    <div>
+                    <!-- <div>
                         <canvas id="canvas"></canvas>
-                    </div>
+                    </div> -->
                 </div>
                 <!-- <canvas id="myChart" class="DFT show"></canvas> -->
 
@@ -361,7 +381,7 @@
                 scales: {
                     y: {
                         min: 0,
-                        // max:600
+                        // max:1000
                     }
 
                 },
@@ -469,12 +489,10 @@
     <script>
         InitWebSocket()
         function InitWebSocket() {
-            // websock = new WebSocket('ws://'+window.location.hostname+':81/'); 
             websock = new WebSocket('ws://192.168.43.108:81/');
             websock.onmessage = function (enent) {
 
                 if (event.data = "Connected") {
-                    // console.log(document.getElementById("indicator"))
                     document.getElementById("indicator").style.backgroundColor = "#55df55"
                 }
                 else if (event.data = "Disconnected") {
@@ -483,12 +501,6 @@
 
                 }
                 let websocket_data = event.data.split(" ")
-                // console.log(websocket_data)
-
-                // if(websocket_data[0]){
-
-                // }
-
 
                 switch (websocket_data[0]) {
                     case "oscilloscope":
@@ -503,8 +515,6 @@
                         break;
                 }
 
-                // pushValueChart(parseInt(event.data))
-                // console.log(event.data)
             }
         }
 

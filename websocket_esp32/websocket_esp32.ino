@@ -24,6 +24,13 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 #define NUM_BANDS 16
 #define NOISE 500 // Noise
 #define TOP 500   // set the Top Value
+
+//Global variable
+char buffer_analogread[20];
+char buffer_fft[100];
+unsigned long previousMillis = 0;
+int interval = 100;
+
 unsigned int sampling_period_us;
 byte peak[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; // The length of these arrays must be >= NUM_BANDS
 int oldBarHeights[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -35,10 +42,9 @@ arduinoFFT FFT = arduinoFFT(vReal, vImag, SAMPLES, SAMPLING_FREQ);
 
 // Function Prototype
 // void webpage();
+void Oscilloscope();
 char *sliceString(char *str, int start, int end);
 void GPIOS(uint8_t *payload);
-char buffer_analogread[20];
-char buffer_fft[100];
 
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16)
 {
@@ -77,7 +83,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
   case WStype_TEXT:
     USE_SERIAL.printf("[%u] get Text: %s\n", num, payload);
     GPIOS(payload);
-    //            String payloadString = (const char *)payload;
+  //String payloadString = (const char *)payload;
 
     break;
   case WStype_BIN:
@@ -93,22 +99,16 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
   }
 }
 
-unsigned long previousMillis = 0;
-int interval = 100;
-// String value_analog;
 
 
 void setup()
 {
   // USE_SERIAL.begin(921600);
   USE_SERIAL.begin(250000);
-
   delay(1000);
-
   USE_SERIAL.println();
   USE_SERIAL.println();
   USE_SERIAL.println();
-
   for (uint8_t t = 4; t > 0; t--)
   {
     USE_SERIAL.printf("[SETUP] BOOT WAIT %d...\n", t);
@@ -140,17 +140,6 @@ void loop()
   // Serial.print("ESP32 Frequency: ");
   // Serial.println(getCpuFrequencyMhz());
 
-  // osciloscope code
-  unsigned long currentMillis = millis();
-  if ((unsigned long)(currentMillis - previousMillis) >= interval)
-  {
-    String value_analog = "oscilloscope "+(String)analogRead(34);
-    // webSocket.broadcastTXT(itoa(value_a, buffer_analogread, 10));
-    webSocket.broadcastTXT(value_analog);
-    //  USE_SERIAL.println(value_analog);
-    previousMillis = currentMillis;
-    // value_a = 0;
-  }
 
   // Fft code
   // Reset bandValues[]
@@ -171,8 +160,8 @@ void loop()
   }
 
   // Compute FFT
-  FFT.DCRemoval();
-  FFT.Windowing(FFT_WIN_TYP_HAMMING, FFT_FORWARD);
+  FFT.DCRemoval(); //DC voltage remoe
+  FFT.Windowing(FFT_WIN_TYP_HAMMING, FFT_FORWARD); //windowing is a part of DSP
   FFT.Compute(FFT_FORWARD);
   FFT.ComplexToMagnitude();
 
@@ -225,21 +214,29 @@ void loop()
   for (byte band = 0; band < NUM_BANDS; band++)
   {
 
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Scale the bars for the display
     int barHeight = bandValues[band] / AMPLITUDE;
-
-    // Serial.println(bandValues[band]);
-    // delay(2);
-
-    // int barHeight = bandValues[band];
     if (barHeight > TOP)
-      barHeight = TOP;
+        barHeight = TOP;
 
     // Small amount of averaging between frames
     barHeight = ((oldBarHeights[band] * 1) + barHeight) / 2;
 
-    // Serial.println(barHeight);
-    // delay(2);
     // Move peak up
     if (barHeight > peak[band])
     {
@@ -248,14 +245,13 @@ void loop()
     String fft_string = "fft "+String(barHeight) + " " + String(band);
     // Serial.println(fft_string);
 
-    //  webSocket.broadcastTXT(itoa(fft_string,buffer_fft,10));
     webSocket.broadcastTXT(fft_string);
     oldBarHeights[band] = barHeight;
   }
 }
 
 // void webpage()
-//{
+// {
 //   server.send(200,"text/html", webpageCode);
 // }
 
@@ -268,19 +264,12 @@ void GPIOS(uint8_t *payload)
 
   String Value = *(&value);
   pinMode(pin_num, OUTPUT);
-  if (Value == "ON_")
-  {
-    digitalWrite(pin_num, HIGH);
-  }
-  else if (Value == "OFF")
-  {
-    digitalWrite(pin_num, LOW);
-  }
-  else
-  {
-    USE_SERIAL.println("else");
-  }
+
+  if (Value == "ON_"){digitalWrite(pin_num, HIGH);}
+  else if (Value == "OFF"){digitalWrite(pin_num, LOW);}
+  else{USE_SERIAL.println("else");}
 }
+
 char *sliceString(char *str, int start, int end)
 {
   int i;
@@ -294,3 +283,37 @@ char *sliceString(char *str, int start, int end)
   output[size] = '\0';
   return output;
 }
+
+//Oscilloscope Code
+void Oscilloscope(){
+  // osciloscope code
+  unsigned long currentMillis = millis();
+  if ((unsigned long)(currentMillis - previousMillis) >= interval)
+  {
+    String value_analog = "oscilloscope "+(String)analogRead(34);
+    // webSocket.broadcastTXT(itoa(value_a, buffer_analogread, 10));
+    webSocket.broadcastTXT(value_analog);
+    //  USE_SERIAL.println(value_analog);
+    previousMillis = currentMillis;
+    // value_a = 0;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
