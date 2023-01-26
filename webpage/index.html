@@ -89,7 +89,7 @@
             display: none !important;
 
         }
- 
+
         .GPIOS {
             font-size: 17px;
             padding: 0px 18px;
@@ -157,18 +157,20 @@
             position: absolute;
             right: 0;
         }
+
         #osciCanvas {
 
-height: 100% !important;
-width: 100% !important;
+            height: 100% !important;
+            width: 100% !important;
 
-}
+        }
+
         #dftCanvas {
 
-height: 100% !important;
-width: 100% !important;
+            height: 100% !important;
+            width: 100% !important;
 
-}
+        }
     </style>
 </head>
 
@@ -212,12 +214,20 @@ width: 100% !important;
             <div class="display">
 
                 <div class="DFT show">
-                    <table width="100%" border="1"><tr><td ><CANVAS id="dftCanvas"></CANVAS></td></tr></table>
+                    <table width="100%" border="1">
+                        <tr>
+                            <td><CANVAS id="dftCanvas"></CANVAS></td>
+                        </tr>
+                    </table>
                 </div>
 
                 <!--  -->
                 <div class="Ossilloscope show">
-                    <table width="100%" border="1"><tr><td ><CANVAS id="osciCanvas"></CANVAS></td></tr></table>
+                    <table width="100%" border="1">
+                        <tr>
+                            <td><CANVAS id="osciCanvas"></CANVAS></td>
+                        </tr>
+                    </table>
                     <div>
                         <canvas id="canvas"></canvas>
                     </div>
@@ -293,7 +303,7 @@ width: 100% !important;
 
 
 
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.js"
         integrity="sha512-uLlukEfSLB7gWRBvzpDnLGvzNUluF19IDEdUoyGAtaO0MVSBsQ+g3qhLRL3GTVoEzKpc24rVT6X1Pr5fmsShBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -322,160 +332,119 @@ width: 100% !important;
         }
 
 
+        const ctx = document.getElementById("osciCanvas").getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+                datasets: [{
+                    pointRadius: 0,
+                    label: 'Oscillscope',
+                    data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+                    backgroundColor: [
+                        'rgba(75, 192, 192,0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(75, 192, 192)'
+                    ],
+                    // fill: true,
+                    borderWidth: 1,
+                    spanGaps: true,
+                    showLine: true,
+                    tension: 0.5
+                }]
+            },
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        min: 0,
+                        // max:600
+                    }
+
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        });
 
 
+        const bar = document.getElementById("dftCanvas").getContext('2d');
+        const myBar = new Chart(bar, {
+            type: 'bar',
+            data: {
+                labels: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+                datasets: [{
+                    pointRadius: 0,
+                    label: 'Oscillscope',
+                    data: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                    ],
+                    // fill: true,
+                    borderWidth: 1,
+                    spanGaps: true,
+                    showLine: true,
+                    tension: 0.5
+                }]
+            },
 
-//         var canvas = document.getElementById("osciCanvas");
-// var ctx = canvas.getContext("2d");
-// let time=1;
-// ctx.moveTo(-100, 0);
-// // ctx.beginPath();
-// ctx.lineTo(400, 100);
-// ctx.stroke();
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        min: 0,
+                        // max:600
+                    }
 
-// function pushValueChart(data){
-// ctx.moveTo(0, 0);
-// ctx.lineTo(400, 100);
-// ctx.stroke();
-// if (time === 20){
+                },
+                animation: {
+                    duration: 0
+                }
+            }
+        });
 
-// }
-// }
-    
-    
-const ctx = document.getElementById("osciCanvas").getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
-        datasets: [{ 
-            pointRadius: 0,
-        label: 'Oscillscope',
-        data: [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
-        backgroundColor: [
-            'rgba(75, 192, 192,0.2)'
-        ],
-        borderColor: [
-            'rgb(75, 192, 192)'
-        ],
-        // fill: true,
-        borderWidth: 1,
-        spanGaps:true,
-        showLine:true,
-        tension: 0.5
-        }]
-    },
-    
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                min:0,
-                // max:600
+        function updateBar(data, position) {
+            if (position <= 15) {
+                myBar.data.datasets[0].data[position] = data
+                myBar.update();
+            }
+        }
+
+        let time = 0;
+        function pushValueChart(data) {
+            let sameData;
+            if (data != sameData) {
+
+                myChart.data.datasets[0].data.push(data)
+                myChart.data.datasets[0].data.shift()
+                sameData = data;
+                time += 1
+                myChart.data.labels.push(time)
+                myChart.data.labels.shift()
+                myChart.update();
             }
 
-        },
-        animation: {
-        duration: 0
         }
-    }
-});
-
-  
-const bar = document.getElementById("dftCanvas").getContext('2d');
-const myBar = new Chart(bar, {
-    type: 'bar',
-    data: {
-        labels: [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
-        datasets: [{ 
-            pointRadius: 0,
-        label: 'Oscillscope',
-        data: [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
-        backgroundColor: [
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(255, 159, 64, 0.2)',
-      'rgba(255, 205, 86, 0.2)',
-      'rgba(75, 192, 192, 0.2)',
-      'rgba(54, 162, 235, 0.2)',
-      'rgba(153, 102, 255, 0.2)',
-      'rgba(201, 203, 207, 0.2)'
-    ],
-    borderColor: [
-      'rgb(255, 99, 132)',
-      'rgb(255, 159, 64)',
-      'rgb(255, 205, 86)',
-      'rgb(75, 192, 192)',
-      'rgb(54, 162, 235)',
-      'rgb(153, 102, 255)',
-      'rgb(201, 203, 207)'
-    ],
-        // fill: true,
-        borderWidth: 1,
-        spanGaps:true,
-        showLine:true,
-        tension: 0.5
-        }]
-    },
-    
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                min:0,
-                // max:600
-            }
-
-        },
-        animation: {
-        duration: 0
-        }
-    }
-});
-
-
-
-
-function updateBar(data,position){
-    if(position<=15){
-        myBar.data.datasets[0].data[position]=data
-        myBar.update();
-    }
-}
-
-
-
-let time=0;
-function pushValueChart(data){
-let sameData;
-    if(data != sameData ){
-
-    myChart.data.datasets[0].data.push(data)
-    myChart.data.datasets[0].data.shift()
-    sameData=data;
-    time+=1
-    myChart.data.labels.push(time)
-    myChart.data.labels.shift()
-    myChart.update();
-    }
-    
-}
-
-    // setTimeout(() => {
-        
-    //     for (let inde = 0; inde < 5; inde++) {
-    //         myChart.clear();
-    //         for (let index = 0; index < 2; index++) {
-    //         pushValueChart( Math.random() * (10 - 9) + 10)
-    //     }
-    //   }
-
-    // }, 1000)
-
-
-
-
 
     </script>
     <script>
@@ -510,8 +479,8 @@ let sameData;
                 }
                 else if (event.data = "Disconnected") {
                     document.getElementById("indicator").style.backgroundColor = "red"
-                }else{
-                    
+                } else {
+
                 }
                 let websocket_data = event.data.split(" ")
                 // console.log(websocket_data)
@@ -523,19 +492,19 @@ let sameData;
 
                 switch (websocket_data[0]) {
                     case "oscilloscope":
-                    pushValueChart(websocket_data[1])
+                        pushValueChart(websocket_data[1])
                         break;
                     case "fft":
-                    updateBar(websocket_data[1], websocket_data[2])
+                        updateBar(websocket_data[1], websocket_data[2])
                         break;
-                
+
                     default:
                         // console.log("hello");
                         break;
                 }
 
                 // pushValueChart(parseInt(event.data))
-                    // console.log(event.data)
+                // console.log(event.data)
             }
         }
 
