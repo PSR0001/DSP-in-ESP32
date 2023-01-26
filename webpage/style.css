@@ -1,0 +1,242 @@
+::-webkit-scrollbar {
+    width: 0px;
+    height:0px;
+  }
+  ::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+  body::-webkit-scrollbar-track {
+      /* background-color: #6c7ebb; */
+    border-radius: 0px;
+  }
+  .dark ::-webkit-scrollbar-track{
+      /* background-color: #31313a; */
+      border-radius: 0 10px 10px 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    
+    /* background-image: linear-gradient(#4458dc, #854fee); */
+    /* border-radius: 1px; */
+  }
+
+body {
+    font-family: 'Trebuchet MS', sans-serif;
+    padding: 5px 50px;
+    /* position: fixed; */
+}
+
+.flex {
+    display: flex;
+    text-align: middle;
+}
+
+.font {
+    font: "Arial", "san-serrif";
+}
+
+.SB {
+    justify-content: space-between;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    margin-right: 5px;
+}
+
+.bold {
+    height: 2px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.tools {
+    /* width: 350px; */
+    border: 1px solid grey;
+    padding: 5px;
+}
+
+.button {
+    font-size: 18px;
+    padding: 0px 10px;
+    min-height: 35px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 8px;
+}
+
+/* custom transistion button */
+.cbutton {
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 8px;
+    text-align: center;
+    font-size: 18px;
+    padding: 0px 10px;
+    min-height: 35px;
+    width: 100px;
+    transition: all 0.5s;
+    cursor: pointer;
+  }
+  
+  .cbutton span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .cbutton span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+.cbutton:hover span {
+    padding-right: 25px;
+  }
+  
+  .cbutton:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+  /* ============= */
+.ROUTE_ON {
+    color: white;
+    background-color: #fa6400;
+    border-color: #aa8c13;
+}
+
+.left {
+    width: 200px;
+    border: 1px solid grey;
+    min-height: 33rem;
+}
+
+.right {
+    padding: 4rem;
+}
+
+.display {
+    border: 1px solid grey;
+    width: 70vw;
+    height: 55vh;
+}
+
+/* system code */
+#sysCanvas{
+    height: 21.875em !important;
+}
+.system{
+
+}
+
+/* ---------------------- */
+#myChart {
+
+    height: 100% !important;
+    width: 100% !important;
+    color: white;
+    /* display: none !important; */
+
+}
+
+.show {
+    display: none !important;
+
+}
+
+.GPIOS {
+    font-size: 17px;
+    padding: 0px 18px;
+    min-height: 42px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin: 8px;
+}
+
+.GPIO_ON {
+    background-color: #12ca5f;
+    border-color: #13aa52;
+    color: white;
+}
+
+.GPIOs {
+    position: inherit;
+}
+
+.WiFi {
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+    padding: 5px;
+    width: 200px;
+    background-color: #f0f0f0;
+    border: 1px solid grey;
+
+}
+
+.WiFi input {
+    margin: 10px;
+    padding: 5px;
+}
+
+.WiFi button {
+    background-color: white;
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+
+.Custom {
+    padding: .5rem;
+}
+
+.Custom textarea {
+    min-width: 66rem;
+    height: 22rem !important;
+    margin-top: 1px;
+}
+
+.Reflash {
+    display: block;
+    width: 15rem;
+    margin: auto;
+    margin-top: 5rem;
+    border: 1px solid grey;
+    padding: 2rem;
+    background-color: whitesmoke;
+    border-radius: 2px;
+}
+
+#canvas {
+    position: absolute;
+    right: 0;
+}
+
+#osciCanvas {
+
+    height: 400px !important;
+    width: 100% !important;
+
+}
+
+#dftCanvas {
+
+    height: 400px !important;
+    width: 100% !important;
+
+}
+
+#Amplitude{
+    width: 300px;
+}
+#Frequency{
+    width: 300px;
+}
+
