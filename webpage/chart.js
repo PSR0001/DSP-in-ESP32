@@ -14,7 +14,7 @@ const myChart = new Chart(ctx, {
             borderColor: [
                 'rgb(75, 192, 192)'
             ],
-            // fill: true,
+            fill: true,
             borderWidth: 1,
             spanGaps: true,
             showLine: true,
@@ -57,7 +57,8 @@ const system_function = new Chart(system, {
             borderWidth: 1,
             spanGaps: true,
             showLine: true,
-            tension: 0.5
+            // tension: 0.5
+            tension: 0
         }]
     },
 
