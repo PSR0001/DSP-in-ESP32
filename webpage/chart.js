@@ -14,7 +14,7 @@ const myChart = new Chart(ctx, {
             borderColor: [
                 'rgb(75, 192, 192)'
             ],
-            fill: true,
+            // fill: true,
             borderWidth: 1,
             spanGaps: true,
             showLine: true,
@@ -48,12 +48,12 @@ const system_function = new Chart(system, {
             label: 'Oscillscope',
             data: [0, 3.3, 0, 3.3, 0],
             backgroundColor: [
-                'rgba(75, 192, 192,0.2)'
+                'rgba(75, 192, 192,0.1)'
             ],
             borderColor: [
                 'rgb(75, 192, 192)'
             ],
-            // fill: true,
+            fill: true,
             borderWidth: 1,
             spanGaps: true,
             showLine: true,

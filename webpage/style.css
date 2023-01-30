@@ -29,6 +29,11 @@ body {
     display: flex;
     text-align: middle;
 }
+.flex-right {
+    display: flex;
+    text-align: right;
+    justify-content: end;
+}
 
 .font {
     font: "Arial", "san-serrif";
@@ -238,5 +243,11 @@ body {
 }
 #Frequency{
     width: 300px;
+}
+#ipAddress{
+    width: 100px;
+}
+#port{
+    width: 20px;
 }
 

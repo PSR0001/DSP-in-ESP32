@@ -1,7 +1,11 @@
-InitWebSocket()
+// InitWebSocket()
 
 function InitWebSocket() {
-    websock = new WebSocket('ws://192.168.43.108:81/');
+
+
+
+
+    websock = new WebSocket(`ws://${document.getElementById("ipAddress").value}:${document.getElementById("port").value}/`);
     websock.onmessage = function (enent) {
 
         if (event.data = "Connected") {

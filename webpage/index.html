@@ -12,11 +12,17 @@
             <h1>Analysis : Embedded </h1>
             <p>esp32</p>
         </div>
-        <div class="flex">
+        <div>
+        <div class="flex-right">
             <h3 class="indicator" id="indicator"></h3>
             <h3>Verson: </h3>
             <h4>0.15.0</h4>
         </div>
+        <div style="margin-top: -15px;">
+            <input type="text" value="192.168.43.108" name="ipAddress" id="ipAddress"><span>:</span><input type="text" value="81" name="port" id="port"> 
+            <button type="button" onclick="InitWebSocket()">Connect</button>
+        </div>
+    </div>
     </div>
     <hr class="bold">
     <div class="flex tools">
@@ -72,7 +78,7 @@
                             <div>
                                 <label for="Frequency">Frequency(Hz)</label><br>
                                 <div class="flex">
-                                <input type="range" name="Frequency" id="Frequency" min="0" max="1000" value="500" oninput="rangeValue2.innerText = this.value" onchange="frequencyChange(this.value)"><p id="rangeValue2">500</p></div>
+                                <input type="range" name="Frequency" id="Frequency" min="0" max="1000" value="5" oninput="rangeValue2.innerText = this.value" onchange="frequencyChange(this.value)"><p id="rangeValue2">5</p></div>
                             </div>
                         </div>
                         <button type="button" id="zooom" class="button" onclick="Zoom()" >Zoom</button>
@@ -202,7 +208,9 @@
             let Frequency_value = document.getElementById('Frequency').value
             for (let index = 0; index < Frequency_value; index++) {
                 if (index%2 ===0) {
+                }else{
                     system_function.data.datasets[0].data[index] = value/100
+
                 }
             }
             // system_function.data.datasets[0].data[3] = value/100
@@ -218,9 +226,9 @@
                 number_array_labels.push(index)
 
                 if (index%2 ===0) {
-                    number_array_data.push(Amplitude_Value)
-                }else{
                     number_array_data.push(0)
+                }else{
+                    number_array_data.push(Amplitude_Value)
 
                 }
             }
