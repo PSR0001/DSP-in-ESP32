@@ -48,13 +48,15 @@ const system_function = new Chart(system, {
             label: 'Oscillscope',
             data: [0, 3.3, 0, 3.3, 0],
             backgroundColor: [
-                'rgba(75, 192, 192,0.1)'
+                // 'rgba(75, 192, 192,0.1)'
+                'rgba(255, 100, 133,0.2)'
             ],
             borderColor: [
-                'rgb(75, 192, 192)'
+                // 'rgb(75, 192, 192)'
+                'rgb(255, 100, 133)'
             ],
             fill: true,
-            borderWidth: 1,
+            borderWidth: 2,
             spanGaps: true,
             showLine: true,
             // tension: 0.5
