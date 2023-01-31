@@ -65,8 +65,9 @@
                             <option value="2">sawtooth</option>
                             <option value="3">Square</option>
                           </select>
-                        <button type="button" id="submit" class="cbutton"><span>Submit</span></button>
+                        <button type="button" id="submit" class="cbutton"><span>Generate</span></button>
                         <button type="button" id="submit" class="button" onclick="updateGraph()"><span>Update Graph</span></button>
+                        <button type="button" id="submit" class="button" onclick="resetGraph()"><span>Reset Graph</span></button>
                         <br><br><br>
                         <div>
                             <div>
@@ -180,6 +181,9 @@
         <script src="socket.js"></script>
  
     <script>
+        // state variable
+
+
         function updateBar(data, position) {
             if (position <= 15) {
                 myBar.data.datasets[0].data[position] = data
@@ -210,7 +214,6 @@
                 if (index%2 ===0) {
                 }else{
                     system_function.data.datasets[0].data[index] = value/100
-
                 }
             }
             // system_function.data.datasets[0].data[3] = value/100
@@ -249,18 +252,28 @@
                 system_function.update()
                     break;
                 case '2':
+                
                 console.log("Two")
                     break;
                 case '3':
-                console.log("Three")
+                    system_function.data.datasets[0].data=[0, 3.3, 0,3.3,0]
+                    system_function.data.labels=[1, 2, 3, 4,5]
+                    system_function.data.datasets[0].stepped=true
+                    system_function.update()
                     break;
                 default:
+                system_function.data.datasets[0].data=[0, 3.3, 0, 3.3, 0]
+                system_function.data.labels=[1, 2, 3, 4,5]   
                 system_function.data.datasets[0].tension = 0.5
                 system_function.update()
                     break;
             }
         }
-
+        function resetGraph(){
+            system_function.data.datasets[0].data=[0, 3.3, 0, 3.3, 0]
+            system_function.data.labels=[1, 2, 3, 4,5]
+            system_function.update()
+        }
 
     </script>
     <script>

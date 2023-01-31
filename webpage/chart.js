@@ -58,7 +58,9 @@ const system_function = new Chart(system, {
             spanGaps: true,
             showLine: true,
             // tension: 0.5
-            tension: 0
+            tension: 0,
+            // stepped: true,
+
         }]
     },
 
