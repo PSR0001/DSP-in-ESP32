@@ -205,6 +205,11 @@ body {
     min-width: 66rem;
     height: 22rem !important;
     margin-top: 1px;
+    border: none;
+}
+.cmdOutput {
+    min-width: 65.8rem;
+    height: 22.6rem;
 }
 
 .Reflash {
