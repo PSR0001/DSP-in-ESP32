@@ -10,21 +10,34 @@
 #include "fft.h"
 #include "wifi_custom.h"
 
+
+//RTOS Define
+#define app_cpu 0
+
+
+TaskHandle_t Task;
+//Task1code: blinks an LED every 1000 ms
+void dspLoop( void * pvParameters ){
+  Serial.print("Task1 running on core ");
+  Serial.println(xPortGetCoreID());
+
+  for(;;){
+    digitalWrite(2, HIGH);
+    delay(1000);
+    digitalWrite(2, LOW);
+    delay(1000);
+  } 
+}
+
+
+
+
+
+
 // WebServer server(80);
-
-
-// Function Prototype
-// void webpage();
-// void Oscilloscope();
-// char *sliceString(char *str, int start, int end);
-// void GPIOS(uint8_t *payload);
-
-
-
 
 void setup()
 {
-  // USE_SERIAL.begin(921600);
   USE_SERIAL.begin(250000);
   delay(1000);
   USE_SERIAL.println();
@@ -52,6 +65,16 @@ void setup()
   //    server.begin();
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
+
+    xTaskCreatePinnedToCore(   //use xTaskCreate() in Vanilla Free RTOS
+    dspLoop,               //Function to be called
+    "loop2",            //Name a TASK
+    1024,                    // Stack Size (for esp32, words in Free RTOS
+    NULL,                    //parameter to pass to function
+    1,                       //Priority of the task (0 to configMax_PRIORITIES - 1)
+    &Task,                    //Task Handel
+    app_cpu);  
+
 }
 
 void loop()
