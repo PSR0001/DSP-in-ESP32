@@ -156,11 +156,6 @@ void loop()
   }
 }
 
-// void webpage()
-// {
-//   server.send(200,"text/html", webpageCode);
-// }
-
 
 
 
