@@ -27,7 +27,7 @@ function InitWebSocket() {
                 break;
 
             default:
-                // console.log("hello");
+                console.log("hello");
                 break;
         }
 

@@ -12,7 +12,8 @@
 
 
 //RTOS Define
-#define app_cpu 0
+#define app_cpu 0//pin
+static const int led_pin = 2;
 
 
 TaskHandle_t Task;
@@ -22,10 +23,10 @@ void dspLoop( void * pvParameters ){
   Serial.println(xPortGetCoreID());
 
   for(;;){
-    digitalWrite(2, HIGH);
-    delay(1000);
-    digitalWrite(2, LOW);
-    delay(1000);
+    digitalWrite(led_pin,HIGH);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    digitalWrite(led_pin,LOW);
+    vTaskDelay(1000 / portTICK_PERIOD_MS);
   } 
 }
 
