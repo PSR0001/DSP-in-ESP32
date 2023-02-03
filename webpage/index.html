@@ -33,7 +33,7 @@
             <button type="button" onclick="route(this)" id="Ossilloscope" class="button">Ossilloscope</button>
             <button type="button" onclick="route(this)" id="DFT" class="button">DFT</button>
             <button type="button" onclick="route(this)" id="Leds" class="button">Leds</button>
-            <button type="button" onclick="route(this)" id="Notes" class="button">Notes</button>
+            <button type="button" onclick="route(this)" id="Mp3" class="button">Mp3</button>
             <button type="button" onclick="route(this)" id="Parameters" class="button">Parameters</button>
             <button type="button" onclick="route(this)" id="WiFi" class="button">WiFi Settings</button>
             <button type="button" onclick="route(this)" id="Custom" class="button">Custom Command</button>
@@ -105,6 +105,39 @@
                     </table>
                 </div>
 
+
+                <div class="Mp3">
+                    <br>
+                    <div class="flex">
+                        <div style="margin-left: 10px;">
+                            <input type="file" accept=".mp3,audio/*">
+                            <button type="button" onclick="hexConverter()">Convert to HEX</button>
+                            <br>
+                            <div class="hexValue"></div>
+                        </div>
+                        <div> 
+                            <button type="button" class="button" onclick="musicCircle(this)">Play</button>
+                            <div class="roundMusic">
+                                <div id="musicID" class="circleMp3 center">
+                                <p>🎵</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
                 <!--  -->
                 <div class="Ossilloscope show">
                     <table width="100%" border="1">
@@ -118,21 +151,23 @@
                 </div>
 
                 <!-- Custom command -->
-                <div class="Custom ">
+                <div class="Custom show ">
                     <table width="100%" border="1">
                         <tr>
-                            <td><div>
-                                <input type="text">
-                                <button type="button" onclick="CDM(this)">cmd</button>
-                            </div>
-                        </td>
+                            <td>
+                                <div>
+                                    <input type="text">
+                                    <button type="button" onclick="CDM(this)">cmd</button>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
-                            <td><div>
-                                <!-- <textarea name="cmd" id="" cols="" rows=""></textarea> -->
-                                <div class="cmdOutput"></div>
-                            </div>
-                        </td>
+                            <td>
+                                <div>
+                                    <!-- <textarea name="cmd" id="" cols="" rows=""></textarea> -->
+                                    <div class="cmdOutput"></div>
+                                </div>
+                            </td>
                         </tr>
                     </table>
 
@@ -200,6 +235,15 @@
     <script src="JS/chart.js"></script>
     <script src="JS/socket.js"></script>
     <script src="JS/updateChart.js"></script>
+
+    <script>
+        function hexConverter() {
+
+        }
+    </script>
+
+
+
 
     <script>
         // draw()

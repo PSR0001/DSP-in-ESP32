@@ -255,3 +255,57 @@ body {
     width: 20px;
 }
 
+/* Music css */
+.music_on{
+    background-color: #12ca5f;
+    border-color: #13aa52;
+    color: white;
+}
+
+
+.hexValue{
+    margin:10px 10px 10px 0;
+    width: 35vw;
+    height: 21.8rem;
+    border: 1px solid grey;
+    overflow-y: scroll;
+}
+.roundMusic{
+    margin:10px 10px 10px 0;
+    width: 33vw;
+    height: 21.8rem;
+    text-align: center;
+}
+
+.center {
+    height: 200px;
+    width: 200px;
+    font-size: 85px;
+    position: relative;
+    border: 3px dotted grey;
+    margin: auto;
+    border-radius: 50%;
+  }
+  
+  .center p {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .rotate {
+    /* width: 100px; */
+    animation: rotation 40s infinite linear;
+  }
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
+  
+
+

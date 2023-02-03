@@ -9,31 +9,46 @@
 #include <arduinoFFT.h>
 #include "fft.h"
 #include "wifi_custom.h"
+#include "wave.h"
 
-
-//RTOS Define
-#define app_cpu 0//pin
+// RTOS Define
+#define app_cpu 0 // pin
 static const int led_pin = 2;
 
-
 TaskHandle_t Task;
-//Task1code: blinks an LED every 1000 ms
-void dspLoop( void * pvParameters ){
+// Task1code: blinks an LED every 1000 ms
+
+void dspLoop(void *pvParameters)
+{
   Serial.print("Task1 running on core ");
   Serial.println(xPortGetCoreID());
 
-  for(;;){
-    digitalWrite(led_pin,HIGH);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    digitalWrite(led_pin,LOW);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-  } 
+  for (;;)
+  {
+    
+      if (c == '0')
+      {
+        wave_type = 0;
+      }
+      else if (c == '1')
+      {
+        wave_type = 1;
+      }
+      else if (c == '2')
+      {
+        wave_type = 2;
+      }
+      else if (c == '3')
+      {
+        wave_type = 3;
+      }
+    dacWrite(25, WaveFormTable[wave_type][i]); //  output wave form
+    // Serial.print(WaveFormTable[wave_type][i]);
+    i++;
+    if (i >= Num_Samples)
+      i = 0;
+  }
 }
-
-
-
-
-
 
 // WebServer server(80);
 
@@ -67,15 +82,14 @@ void setup()
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
 
-    xTaskCreatePinnedToCore(   //use xTaskCreate() in Vanilla Free RTOS
-    dspLoop,               //Function to be called
-    "loop2",            //Name a TASK
-    1024,                    // Stack Size (for esp32, words in Free RTOS
-    NULL,                    //parameter to pass to function
-    1,                       //Priority of the task (0 to configMax_PRIORITIES - 1)
-    &Task,                    //Task Handel
-    app_cpu);  
-
+  xTaskCreatePinnedToCore( // use xTaskCreate() in Vanilla Free RTOS
+      dspLoop,             // Function to be called
+      "loop2",             // Name a TASK
+      1024,                // Stack Size (for esp32, words in Free RTOS
+      NULL,                // parameter to pass to function
+      1,                   // Priority of the task (0 to configMax_PRIORITIES - 1)
+      &Task,               // Task Handel
+      app_cpu);
 }
 
 void loop()
@@ -85,113 +99,96 @@ void loop()
   // Serial.print("ESP32 Frequency: ");
   // Serial.println(getCpuFrequencyMhz());
 
+  // // Fft code
+  // // Reset bandValues[]
+  // for (int i = 0; i < NUM_BANDS; i++)
+  // {
+  //   bandValues[i] = 0;
+  // }
 
-  // Fft code
-  // Reset bandValues[]
-  for (int i = 0; i < NUM_BANDS; i++)
-  {
-    bandValues[i] = 0;
-  }
+  // // Sample the audio pin
+  // for (int i = 0; i < SAMPLES; i++)
+  // {
+  //   newTime = micros();
+  //   vReal[i] = analogRead(34);
+  //   vImag[i] = 0;
+  //   while ((micros() - newTime) < sampling_period_us){ /* Do Nothing */ }
+  //   // Serial.print("[DEBUG] : VReal Variable Value : ");
+  //   // Serial.println(vReal[i]);
+  // }
 
-  // Sample the audio pin
-  for (int i = 0; i < SAMPLES; i++)
-  {
-    newTime = micros();
-    vReal[i] = analogRead(34); 
-    vImag[i] = 0;
-    while ((micros() - newTime) < sampling_period_us){ /* Do Nothing */ }
-    // Serial.print("[DEBUG] : VReal Variable Value : ");
-    // Serial.println(vReal[i]);
-  }
+  // // Compute FFT
+  // FFT.DCRemoval(); //DC voltage remoe
+  // FFT.Windowing(FFT_WIN_TYP_HAMMING, FFT_FORWARD); //windowing is a part of DSP
+  // FFT.Compute(FFT_FORWARD);
+  // FFT.ComplexToMagnitude();
 
-  // Compute FFT
-  FFT.DCRemoval(); //DC voltage remoe
-  FFT.Windowing(FFT_WIN_TYP_HAMMING, FFT_FORWARD); //windowing is a part of DSP
-  FFT.Compute(FFT_FORWARD);
-  FFT.ComplexToMagnitude();
+  // // Analyse FFT results
+  // for (int i = 2; i < (SAMPLES / 2); i++)
+  // {
+  //   if (vReal[i] > NOISE)
+  //   {
 
-  // Analyse FFT results
-  for (int i = 2; i < (SAMPLES / 2); i++)
-  { 
-    if (vReal[i] > NOISE)
-    { 
+  //     // Serial.print("[DEBUG] : VReal Variable Value : ");
+  //     // Serial.println(vReal[i]);
 
-      // Serial.print("[DEBUG] : VReal Variable Value : ");
-      // Serial.println(vReal[i]);
+  //     // 16 bands
+  //     if (i <= 2)
+  //       bandValues[0] += (int)vReal[i];
+  //     if (i > 2 && i <= 3)
+  //       bandValues[1] += (int)vReal[i];
+  //     if (i > 3 && i <= 5)
+  //       bandValues[2] += (int)vReal[i];
+  //     if (i > 5 && i <= 7)
+  //       bandValues[3] += (int)vReal[i];
+  //     if (i > 7 && i <= 9)
+  //       bandValues[4] += (int)vReal[i];
+  //     if (i > 9 && i <= 13)
+  //       bandValues[5] += (int)vReal[i];
+  //     if (i > 13 && i <= 18)
+  //       bandValues[6] += (int)vReal[i];
+  //     if (i > 18 && i <= 25)
+  //       bandValues[7] += (int)vReal[i];
+  //     if (i > 25 && i <= 36)
+  //       bandValues[8] += (int)vReal[i];
+  //     if (i > 36 && i <= 50)
+  //       bandValues[9] += (int)vReal[i];
+  //     if (i > 50 && i <= 69)
+  //       bandValues[10] += (int)vReal[i];
+  //     if (i > 69 && i <= 97)
+  //       bandValues[11] += (int)vReal[i];
+  //     if (i > 97 && i <= 135)
+  //       bandValues[12] += (int)vReal[i];
+  //     if (i > 135 && i <= 189)
+  //       bandValues[13] += (int)vReal[i];
+  //     if (i > 189 && i <= 264)
+  //       bandValues[14] += (int)vReal[i];
+  //     if (i > 264)
+  //       bandValues[15] += (int)vReal[i];
+  //   }
+  // }
 
-      // 16 bands
-      if (i <= 2)
-        bandValues[0] += (int)vReal[i];
-      if (i > 2 && i <= 3)
-        bandValues[1] += (int)vReal[i];
-      if (i > 3 && i <= 5)
-        bandValues[2] += (int)vReal[i];
-      if (i > 5 && i <= 7)
-        bandValues[3] += (int)vReal[i];
-      if (i > 7 && i <= 9)
-        bandValues[4] += (int)vReal[i];
-      if (i > 9 && i <= 13)
-        bandValues[5] += (int)vReal[i];
-      if (i > 13 && i <= 18)
-        bandValues[6] += (int)vReal[i];
-      if (i > 18 && i <= 25)
-        bandValues[7] += (int)vReal[i];
-      if (i > 25 && i <= 36)
-        bandValues[8] += (int)vReal[i];
-      if (i > 36 && i <= 50)
-        bandValues[9] += (int)vReal[i];
-      if (i > 50 && i <= 69)
-        bandValues[10] += (int)vReal[i];
-      if (i > 69 && i <= 97)
-        bandValues[11] += (int)vReal[i];
-      if (i > 97 && i <= 135)
-        bandValues[12] += (int)vReal[i];
-      if (i > 135 && i <= 189)
-        bandValues[13] += (int)vReal[i];
-      if (i > 189 && i <= 264)
-        bandValues[14] += (int)vReal[i];
-      if (i > 264)
-        bandValues[15] += (int)vReal[i];
-    }
-  }
+  // // Process the FFT data into bar heights
+  // for (byte band = 0; band < NUM_BANDS; band++)
+  // {
 
-  // Process the FFT data into bar heights
-  for (byte band = 0; band < NUM_BANDS; band++)
-  {
+  //   // Scale the bars for the display
+  //   int barHeight = bandValues[band] / AMPLITUDE;
+  //   if (barHeight > TOP)
+  //       barHeight = TOP;
 
-    // Scale the bars for the display
-    int barHeight = bandValues[band] / AMPLITUDE;
-    if (barHeight > TOP)
-        barHeight = TOP;
+  //   // Small amount of averaging between frames
+  //   barHeight = ((oldBarHeights[band] * 1) + barHeight) / 2;
 
-    // Small amount of averaging between frames
-    barHeight = ((oldBarHeights[band] * 1) + barHeight) / 2;
+  //   // Move peak up
+  //   if (barHeight > peak[band])
+  //   {
+  //     peak[band] = min(TOP, barHeight);
+  //   }
+  //   String fft_string = "fft "+String(barHeight) + " " + String(band);
+  //   // Serial.println(fft_string);
 
-    // Move peak up
-    if (barHeight > peak[band])
-    {
-      peak[band] = min(TOP, barHeight);
-    }
-    String fft_string = "fft "+String(barHeight) + " " + String(band);
-    // Serial.println(fft_string);
-
-    webSocket.broadcastTXT(fft_string);
-    oldBarHeights[band] = barHeight;
-  }
+  //   webSocket.broadcastTXT(fft_string);
+  //   oldBarHeights[band] = barHeight;
+  // }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

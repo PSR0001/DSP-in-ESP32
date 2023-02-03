@@ -12,10 +12,11 @@ function route(e) {
     e.classList.toggle("ROUTE_ON")
     document.querySelector(`.${e.id}`).classList.toggle("show")
 }
-
-function DFT() {
-    document.getElementById("myChart").classList.toggle("show");
+function musicCircle(e) {
+    e.classList.toggle('music_on')
+    document.getElementById('musicID').classList.toggle('rotate')
 }
+
 
 
 
